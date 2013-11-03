@@ -1,9 +1,11 @@
 require "spec_helper"
 
 feature "Campaign management" do
-  given(:platform_names) { %w(Android iOS) }
   given(:email) { "admin@example.com" }
   given(:password) { "password" }
+  given(:campaign_name) { "Kansas City Shuffle" }
+  given(:campaign_budget) { 5000 }
+  given(:platform_names) { %w(Android iOS) }
 
   background do
     create_platforms(platform_names)
@@ -17,8 +19,8 @@ feature "Campaign management" do
     end
 
     scenario "following the happy path" do
-      fill_in("Name", with: "Pink Rabbit")
-      fill_in("Budget", with: 1001)
+      fill_in "Name", with: campaign_name
+      fill_in "Budget", with: campaign_budget
       check("Android")
       click_on "Create Campaign"
 
@@ -27,8 +29,8 @@ feature "Campaign management" do
 
     context "when omitting the platform" do
       scenario "an error message is displayed" do
-        fill_in("Name", with: "Pink Rabbit")
-        fill_in("Budget", with: 1001)
+        fill_in("Name", with: campaign_name)
+        fill_in("Budget", with: campaign_budget)
         click_on "Create Campaign"
 
         expect(find("#campaign_platforms_input .inline-errors").text)
@@ -39,7 +41,7 @@ feature "Campaign management" do
 
   context "when listing campaigns" do
     background do
-      create_campaign("Pink Rabbit", 1001, platform_names)
+      create_campaign(campaign_name, campaign_budget, platform_names)
     end
 
     scenario "the campaigns' platforms are displayed" do
@@ -50,7 +52,7 @@ feature "Campaign management" do
 
   context "when showing a campaign's details" do
     background do
-      create_campaign("Pink Rabbit", 1001, platform_names)
+      create_campaign(campaign_name, campaign_budget, platform_names)
     end
 
     scenario "the campaign's platforms are displayed" do
@@ -61,7 +63,7 @@ feature "Campaign management" do
 
   context "when adding a new platform later" do
     background do
-      create_campaign("Pink Rabbit", 1001, platform_names)
+      create_campaign(campaign_name, campaign_budget, platform_names)
       create_platforms(["Firefox OS"])
     end
 

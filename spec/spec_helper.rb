@@ -16,7 +16,7 @@ RSpec.configure do |config|
 end
 
 def create_campaign(name, budget, platform_names)
-  platform_ids = platform_names.map { |pname| Platform.find_by_name(pname).id }
+  platform_ids = platform_names.map { |pname| Platform.find_or_create_by_name(pname).id }
   Campaign.create!(name: name, budget: budget, platform_ids: platform_ids)
 end
 
@@ -24,8 +24,8 @@ def create_platforms(names)
   names.each { |name| Platform.create!(name: name) }
 end
 
-def create_admin_user(email, password)
-  AdminUser.create!(email: email, password: password)
+def create_admin_user(email, password, superuser = false)
+  AdminUser.create!(email: email, password: password, superuser: superuser)
 end
 
 def sign_in_admin_user(email, password)

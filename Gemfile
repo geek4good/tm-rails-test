@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.14'
 
 gem 'activeadmin'
+gem 'cancan', '~> 1.6'
 gem 'jquery-rails', '~> 2.3.0'
 gem 'meta_search', '>= 1.1.0.pre'
 gem 'sqlite3'

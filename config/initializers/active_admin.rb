@@ -86,13 +86,17 @@ ActiveAdmin.setup do |config|
   # Default:
   # config.logout_link_method = :get
 
+  # == Authorization
+  #
+  config.authorization_adapter = ActiveAdmin::CanCanAdapter
+
   # == Root
   #
   # Set the action to call for the root path. You can set different
   # roots for each namespace.
   #
   # Default:
-  # config.root_to = 'dashboard#index'
+  config.root_to = 'dashboard#index'
 
   # == Admin Comments
   #
